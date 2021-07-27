@@ -4,10 +4,10 @@
 
 //definição dos pinos digitais e analógicos
 #define pin_analog A0
+#define pin2_analog A1
 #define relay 8
 #define p5va0 7
 #define p5va1 6
-#define pin2_analog A1
 #define ledred 10
 #define ledgreen 9
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
@@ -26,14 +26,11 @@ void setup(){
   pinMode(p5va1, OUTPUT);
   pinMode(ledgreen, OUTPUT);
   pinMode(ledred, OUTPUT);
-  pinMode(p5va0, HIGH);
-  pinMode(p5va1, HIGH);
+  digitalWrite(p5va0, HIGH);
+  digitalWrite(p5va1, HIGH);
 
 }
 void loop(){
-//define pino 5V A0 e A1 em modo HIGH(ligado) fornecendo alimentação 5V pela porta digital
- // pinMode(p5va0, HIGH);
- // pinMode(p5va1, HIGH);
 //limpa o lcd para receber novos dados
   lcd.clear();
   
@@ -52,13 +49,13 @@ obs: XXX remetem aos valores dos sensores de 0% a 100%*/
   lcd.print("S1:");
   lcd.setCursor(4, 0);
   lcd.print(Porcento);
-  lcd.setCursor(7, 1);
+  lcd.setCursor(7, 0);
   lcd.print("%");
   lcd.setCursor(8, 0);
   lcd.print("S2:");
   lcd.setCursor(12, 0);
   lcd.print(Porcento2);
-  lcd.setCursor(15, 1);
+  lcd.setCursor(15, 0);
   lcd.print("%");
 
 /*Caso os sensores forem igualmente iguais ou menores de 45% 
@@ -68,7 +65,6 @@ o módulo relê aciona a válvula solenóide*/
           digitalWrite(relay, LOW);
           lcd.setCursor(3, 1);
           lcd.print("Irrigando...");
-        //  delay(300000);
       }
 
 /*Caso os valores dos dois sensores ou somente um deles possuir 
@@ -80,11 +76,5 @@ o valor maior que 45% ele mantem o relê desligado*/
           lcd.print("Irrigado...");
       }
 
-//desativa os sensores de umidade para evitar gasto do sistema
-// pinMode(p5va0, LOW);
-//  pinMode(p5va1, LOW);
-
-//espera 15 minutos para retomar o loop
-//delay(1800000);
 delay(1000);
 }
